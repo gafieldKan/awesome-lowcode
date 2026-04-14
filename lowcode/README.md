@@ -1,3 +1,9 @@
-# lowcode
+# Lowcode Documentation
 
-���代码平台核心目录，包含前端页面可视化编辑器、数据源配置与基础后端服务代码。参考结构与用例见各子目录。
+This is the README for the lowcode project.
+
+## Features
+- Integrated model script editing
+- Workflow editing
+- Permission configuration
+- Dynamic operations for form workflows
