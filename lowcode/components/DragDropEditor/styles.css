@@ -1,0 +1,245 @@
+.editor-layout {
+  height: 100vh;
+  width: 100%;
+}
+
+.editor-header {
+  background: #1890ff;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.editor-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.editor-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.editor-sidebar-left {
+  background: #fafafa;
+  border-right: 1px solid #e8e8e8;
+}
+
+.editor-content {
+  background: #f0f2f5;
+  padding: 16px;
+  overflow: auto;
+}
+
+.editor-sidebar-right {
+  background: #fafafa;
+  border-left: 1px solid #e8e8e8;
+}
+
+/* Component Palette */
+.component-palette {
+  height: 100%;
+  overflow: auto;
+}
+
+.palette-card {
+  height: 100%;
+}
+
+.component-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.component-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.component-item:hover {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.drag-icon {
+  color: #999;
+  margin-right: 8px;
+}
+
+.component-label {
+  flex: 1;
+  font-size: 14px;
+}
+
+.add-btn {
+  margin-left: 8px;
+}
+
+/* Canvas */
+.canvas-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-toolbar {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.canvas {
+  flex: 1;
+  background: white;
+  border: 2px dashed #d9d9d9;
+  border-radius: 4px;
+  padding: 16px;
+  overflow: auto;
+  min-height: 400px;
+}
+
+.canvas-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Draggable Component */
+.draggable-component {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  padding: 8px;
+  background: white;
+  transition: all 0.2s;
+}
+
+.draggable-component:hover {
+  border-color: #1890ff;
+}
+
+.draggable-component.selected {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.component-type-tag {
+  font-size: 12px;
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.component-drag-handle {
+  color: #999;
+  cursor: move;
+}
+
+.component-preview {
+  min-height: 40px;
+}
+
+/* Component styles */
+.component-input,
+.component-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.component-button {
+  padding: 8px 16px;
+  background: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.component-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.component-table th,
+.component-table td {
+  border: 1px solid #e8e8e8;
+  padding: 8px;
+  text-align: left;
+}
+
+.component-text {
+  margin: 0;
+  color: #333;
+}
+
+.component-image {
+  width: 100%;
+  height: 120px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  border: 1px solid #e8e8e8;
+}
+
+.component-card {
+  padding: 16px;
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.component-divider {
+  border: none;
+  border-top: 1px solid #e8e8e8;
+  margin: 16px 0;
+}
+
+/* Properties Panel */
+.properties-panel {
+  height: 100%;
+  overflow: auto;
+}
+
+.component-id {
+  font-size: 11px;
+  word-break: break-all;
+}
+
+/* Component Tree */
+.component-tree {
+  height: 200px;
+  overflow: auto;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tree-card {
+  height: 100%;
+}
+
+.tree-node {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* App Layout */
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.app-logo {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 24px;
+}
+
+.app-content {
+  padding: 24px;
+  background: #f0f2f5;
+}
+
+/* Schema Editor */
+.schema-editor {
+  width: 100%;
+}
+
+.schema-list {
+  margin-bottom: 24px;
+}
+
+.model-detail {
+  margin-top: 24px;
+}
+
+/* Auto Form Generator */
+.auto-form-generator {
+  width: 100%;
+}

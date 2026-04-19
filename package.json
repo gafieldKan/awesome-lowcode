@@ -1,0 +1,41 @@
+{
+  "name": "awesome-lowcode",
+  "version": "1.0.0",
+  "description": "低代码平台",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gafieldKan/awesome-lowcode.git"
+  },
+  "keywords": ["lowcode", "react", "vite", "antd"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gafieldKan/awesome-lowcode/issues"
+  },
+  "homepage": "https://github.com/gafieldKan/awesome-lowcode#readme",
+  "dependencies": {
+    "@ant-design/icons": "^6.1.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "antd": "^6.3.6",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.1",
+    "vite": "^8.0.8",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.8.3"
+  }
+}

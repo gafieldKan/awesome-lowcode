@@ -1,48 +1,31 @@
-import React, { useState } from "react";
-import { Button } from "antd";
+import React from 'react'
+import { Layout } from 'antd'
+import ComponentPalette from './ComponentPalette'
+import Canvas from './Canvas'
+import PropertiesPanel from './PropertiesPanel'
+import ComponentTree from './ComponentTree'
+import './styles.css'
 
-const componentsList = [
-  { type: "Input", label: "输入框" },
-  { type: "Button", label: "按钮" },
-  { type: "Table", label: "表格" },
-];
+const { Header, Content, Sider } = Layout
 
-export default function DragDropEditor({ onChange }) {
-  const [layout, setLayout] = useState([]);
-
-  const handleDrop = (component) => {
-    setLayout([...layout, { ...component, id: Date.now() }]);
-    onChange && onChange([...layout, { ...component, id: Date.now() }]);
-  };
-
+export default function DragDropEditor() {
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ width: "200px" }}>
-        {componentsList.map((c) => (
-          <Button
-            key={c.type}
-            style={{ margin: 8 }}
-            draggable
-            onDragStart={(e) => {
-              e.dataTransfer.setData("component", JSON.stringify(c));
-            }}
-          >
-            {c.label}
-          </Button>
-        ))}
-      </div>
-      <div
-        style={{ flex: 1, minHeight: 300, border: "1px dashed #ccc" }}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          const comp = JSON.parse(e.dataTransfer.getData("component"));
-          handleDrop(comp);
-        }}
-      >
-        {layout.map((item) => (
-          <div key={item.id}>{item.label} 组件</div>
-        ))}
-      </div>
-    </div>
-  );
+    <Layout className="editor-layout">
+      <Header className="editor-header">
+        <h1 className="editor-title">Awesome Lowcode - 拖拽编辑器</h1>
+      </Header>
+      <Layout className="editor-body">
+        <Sider width={240} className="editor-sidebar-left">
+          <ComponentPalette />
+        </Sider>
+        <Content className="editor-content">
+          <ComponentTree />
+          <Canvas />
+        </Content>
+        <Sider width={300} className="editor-sidebar-right">
+          <PropertiesPanel />
+        </Sider>
+      </Layout>
+    </Layout>
+  )
 }
