@@ -8,7 +8,7 @@ const { Text } = Typography
 const { Option } = Select
 
 const WorkflowDesigner = () => {
-  const { workflows, selectedWorkflow, selectWorkflow, addWorkflow, deleteWorkflow, updateWorkflow, addAction, updateAction, deleteAction } = useWorkflowStore()
+  const { workflows, selectedWorkflow, selectWorkflow, addWorkflow, deleteWorkflow, updateWorkflow, addAction } = useWorkflowStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [workflowName, setWorkflowName] = useState('')
   const [workflowDesc, setWorkflowDesc] = useState('')
@@ -254,7 +254,7 @@ const WorkflowDesigner = () => {
                 </div>
                 <div className="property-item">
                   <Text strong>创建时间:</Text>
-                  <Text>{new Date(selectedWorkflowData.createdAt || Date.now()).toLocaleString()}</Text>
+                  <Text>{new Date(selectedWorkflowData.createdAt || 0).toLocaleString()}</Text>
                 </div>
               </div>
             ) : (

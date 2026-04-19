@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card, Tree, Button, Space } from 'antd'
 import {
-  PlusOutlined,
   DeleteOutlined,
   SettingOutlined,
 } from '@ant-design/icons'
@@ -11,7 +10,7 @@ const ComponentTree = () => {
   const { components, selectComponent, selectedComponent, removeComponent } =
     useEditorStore()
 
-  const treeData = components.map((comp, index) => ({
+  const treeData = components.map((comp) => ({
     title: (
       <div className="tree-node">
         <span>{`${comp.label} (${comp.type})`}</span>

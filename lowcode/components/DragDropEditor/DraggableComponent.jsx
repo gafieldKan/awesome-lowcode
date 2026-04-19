@@ -1,5 +1,4 @@
 import React from 'react'
-import { Card, Tag } from 'antd'
 import { HolderOutlined } from '@ant-design/icons'
 
 const DraggableComponent = ({ component, isSelected, onSelect }) => {

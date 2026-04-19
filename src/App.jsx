@@ -2,7 +2,12 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { ConfigProvider, Layout, Menu } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
-import { HomeOutlined, EditOutlined, PartitionOutlined, ProjectOutlined } from '@ant-design/icons'
+import {
+  HomeOutlined,
+  EditOutlined,
+  PartitionOutlined,
+  ProjectOutlined,
+} from '@ant-design/icons'
 import DragDropEditor from '../lowcode/components/DragDropEditor'
 import ModelDesigner from '../lowcode/components/ModelDesigner'
 import WorkflowDesigner from '../lowcode/components/WorkflowDesigner'
@@ -33,7 +38,16 @@ function HomePage() {
           </button>
         </Link>
       </div>
-      <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, maxWidth: 800, margin: '48px auto 0' }}>
+      <div
+        style={{
+          marginTop: 48,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 24,
+          maxWidth: 800,
+          margin: '48px auto 0',
+        }}
+      >
         <div style={{ padding: 24, background: '#f5f5f5', borderRadius: 8 }}>
           <h3>🎨 拖拽式编辑</h3>
           <p style={{ color: '#666', marginTop: 8 }}>
@@ -59,10 +73,30 @@ function HomePage() {
 
 function MainLayout({ children, currentPath }) {
   const menuItems = [
-    { key: '/', icon: <HomeOutlined />, label: '首页', path: '/' },
-    { key: '/editor', icon: <EditOutlined />, label: '表单设计器', path: '/editor' },
-    { key: '/models', icon: <PartitionOutlined />, label: '模型设计器', path: '/models' },
-    { key: '/workflow', icon: <ProjectOutlined />, label: '工作流', path: '/workflow' },
+    {
+      key: '/',
+      icon: <HomeOutlined />,
+      label: '首页',
+      path: '/',
+    },
+    {
+      key: '/editor',
+      icon: <EditOutlined />,
+      label: '表单设计器',
+      path: '/editor',
+    },
+    {
+      key: '/models',
+      icon: <PartitionOutlined />,
+      label: '模型设计器',
+      path: '/models',
+    },
+    {
+      key: '/workflow',
+      icon: <ProjectOutlined />,
+      label: '工作流',
+      path: '/workflow',
+    },
   ]
 
   return (
@@ -86,20 +120,60 @@ function MainLayout({ children, currentPath }) {
 }
 
 function App() {
-  const [currentPath, setCurrentPath] = React.useState(window.location.pathname)
+  const [currentPath, setCurrentPath] = React.useState(
+    () => window.location.pathname
+  )
 
   React.useEffect(() => {
-    setCurrentPath(window.location.pathname)
+    const handlePathChange = () => {
+      setCurrentPath(window.location.pathname)
+    }
+    window.addEventListener('popstate', handlePathChange)
+    window.addEventListener('pushState', handlePathChange)
+    window.addEventListener('replaceState', handlePathChange)
+    return () => {
+      window.removeEventListener('popstate', handlePathChange)
+      window.removeEventListener('pushState', handlePathChange)
+      window.removeEventListener('replaceState', handlePathChange)
+    }
   }, [])
 
   return (
     <ConfigProvider locale={zhCN}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainLayout currentPath={currentPath}><HomePage /></MainLayout>} />
-          <Route path="/editor" element={<MainLayout currentPath={currentPath}><DragDropEditor /></MainLayout>} />
-          <Route path="/models" element={<MainLayout currentPath={currentPath}><ModelDesigner /></MainLayout>} />
-          <Route path="/workflow" element={<MainLayout currentPath={currentPath}><WorkflowDesigner /></MainLayout>} />
+          <Route
+            path="/"
+            element={
+              <MainLayout currentPath={currentPath}>
+                <HomePage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/editor"
+            element={
+              <MainLayout currentPath={currentPath}>
+                <DragDropEditor />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/models"
+            element={
+              <MainLayout currentPath={currentPath}>
+                <ModelDesigner />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/workflow"
+            element={
+              <MainLayout currentPath={currentPath}>
+                <WorkflowDesigner />
+              </MainLayout>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Empty, Button } from 'antd'
-import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 import useEditorStore from '../../store/editorStore'
 import DraggableComponent from './DraggableComponent'
 

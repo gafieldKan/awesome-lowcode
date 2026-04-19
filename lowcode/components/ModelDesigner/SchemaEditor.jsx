@@ -1,15 +1,11 @@
 import React, { useState } from 'react'
-import { Card, Form, Input, Table, Button, Tag, Modal, Select, Switch, Space, Typography } from 'antd'
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { Card, Form, Input, Table, Button, Tag, Modal, Space } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import useModelStore from '../../store/modelStore'
 
-const { Text } = Typography
-const { Option } = Select
-
 const SchemaEditor = () => {
-  const { models, addModel, updateModel, deleteModel, selectModel, selectedModel, addField, updateField, deleteField, fieldTypes } = useModelStore()
+  const { models, addModel, selectModel, selectedModel, addField, updateField, deleteField } = useModelStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editingModel, setEditingModel] = useState(null)
   const [modelName, setModelName] = useState('')
   const [modelDescription, setModelDescription] = useState('')
 
@@ -52,12 +48,12 @@ const SchemaEditor = () => {
     {
       title: '操作',
       key: 'action',
-      render: (_, record, index) => (
+      render: (_, record) => (
         <Space>
           <Button
             type="link"
             size="small"
-            onClick={() => handleEditField(record, index)}
+            onClick={() => handleEditField(record)}
           >
             编辑
           </Button>
@@ -65,7 +61,7 @@ const SchemaEditor = () => {
             type="link"
             size="small"
             danger
-            onClick={() => deleteField(editingModel?.id, record.id)}
+            onClick={() => deleteField(selectedModel, record.id)}
           >
             删除
           </Button>
@@ -74,23 +70,33 @@ const SchemaEditor = () => {
     },
   ]
 
-  const handleEditField = (field, index) => {
-    // Open field edit modal - simplified for now
+  const handleEditField = (field) => {
     const name = prompt('字段名:', field.name || '')
     const type = prompt('类型:', field.type || 'string')
-    if (name && editingModel) {
-      updateField(editingModel.id, field.id, { name, type })
+    if (name && selectedModel) {
+      updateField(selectedModel, field.id, { name, type })
     }
   }
 
-  const selectedModelData = models.find(m => m.id === selectedModel)
+  const selectedModelData = models.find((m) => m.id === selectedModel)
 
   return (
     <div className="schema-editor">
       <div className="schema-list" style={{ marginBottom: 16 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 16,
+          }}
+        >
           <h2>数据模型</h2>
-          <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => setIsModalOpen(true)}
+          >
             新建模型
           </Button>
         </div>
@@ -99,7 +105,12 @@ const SchemaEditor = () => {
             <Card
               key={model.id}
               hoverable
-              style={{ width: 200, cursor: 'pointer', border: selectedModel === model.id ? '2px solid #1890ff' : undefined }}
+              style={{
+                width: 200,
+                cursor: 'pointer',
+                border:
+                  selectedModel === model.id ? '2px solid #1890ff' : undefined,
+              }}
               onClick={() => selectModel(model.id)}
               title={model.name}
               size="small"
@@ -108,7 +119,9 @@ const SchemaEditor = () => {
             </Card>
           ))}
           {models.length === 0 && (
-            <div style={{ padding: 20, color: '#999' }}>暂无模型，请点击"新建模型"创建</div>
+            <div style={{ padding: 20, color: '#999' }}>
+              暂无模型，请点击 &quot;新建模型&quot; 创建
+            </div>
           )}
         </Space>
       </div>
@@ -124,7 +137,11 @@ const SchemaEditor = () => {
                   onClick={() => {
                     const name = prompt('字段名:')
                     if (name) {
-                      addField(selectedModelData.id, { name, type: 'string', default: '' })
+                      addField(selectedModelData.id, {
+                        name,
+                        type: 'string',
+                        default: '',
+                      })
                     }
                   }}
                 >
@@ -132,11 +149,15 @@ const SchemaEditor = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    const schema = JSON.stringify({
-                      id: selectedModelData.id,
-                      name: selectedModelData.name,
-                      fields: selectedModelData.fields,
-                    }, null, 2)
+                    const schema = JSON.stringify(
+                      {
+                        id: selectedModelData.id,
+                        name: selectedModelData.name,
+                        fields: selectedModelData.fields,
+                      },
+                      null,
+                      2
+                    )
                     navigator.clipboard.writeText(schema)
                     alert('Schema 已复制到剪贴板')
                   }}

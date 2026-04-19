@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Card, Form, Input, InputNumber, Select, Switch, DatePicker, Button, Space, Alert, Typography } from 'antd'
+import { Card, Form, Input, InputNumber, DatePicker, Button, Space, Alert, Typography } from 'antd'
 import useModelStore from '../../store/modelStore'
 
-const { Option } = Select
 const { Text } = Typography
 
 const AutoFormGenerator = () => {
@@ -52,7 +51,7 @@ const AutoFormGenerator = () => {
       case 'boolean':
         return (
           <Form.Item {...commonProps} valuePropName="checked">
-            <Switch />
+            <input type="checkbox" />
           </Form.Item>
         )
       case 'date':
@@ -71,7 +70,7 @@ const AutoFormGenerator = () => {
   }
 
   const handleSubmit = (values) => {
-    console.log('Form submitted:', values)
+    // console.warn('Form submitted:', values)
     alert('表单已提交，请查看控制台输出')
   }
 
