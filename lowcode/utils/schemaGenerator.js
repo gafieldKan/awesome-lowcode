@@ -6,7 +6,7 @@ export const generateSchema = (components) => {
   return {
     version: '1.0.0',
     type: 'lowcode-page',
-    components: components.map(comp => ({
+    components: components.map((comp) => ({
       id: comp.id,
       type: comp.type,
       label: comp.label,

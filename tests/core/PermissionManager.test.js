@@ -14,7 +14,7 @@ describe('PermissionManager', () => {
   beforeEach(() => {
     permissionManager.clear()
     // 重新注册默认角色
-    Object.values(defaultRoles).forEach(role => {
+    Object.values(defaultRoles).forEach((role) => {
       permissionManager.registerRole(role)
     })
   })
@@ -32,32 +32,32 @@ describe('PermissionManager', () => {
 
     it('应该为用户分配角色', () => {
       permissionManager.assignRole('user1', 'admin')
-      const role = permissionManager.getUserRole('user1')
-      expect(role).toEqual(defaultRoles.ADMIN)
+      const roles = permissionManager.getUserRoles('user1')
+      expect(roles[0]?.id).toBe('admin')
     })
   })
 
   describe('模型权限', () => {
     beforeEach(() => {
-      permissionManager.setModelPermission('user', 'admin', PermissionLevel.ADMIN)
-      permissionManager.setModelPermission('user', 'user', PermissionLevel.READ)
+      permissionManager.setModelPermission('test_model', 'admin', ['read', 'write', 'create', 'delete'])
+      permissionManager.setModelPermission('test_model', 'user', ['read'])
     })
 
     it('应该正确检查管理员权限', () => {
       expect(
-        permissionManager.checkModelPermission('user', 'admin', PermissionLevel.WRITE)
+        permissionManager.hasModelPermission('test_model', 'admin', 'write')
       ).toBe(true)
     })
 
     it('应该拒绝用户的写权限', () => {
       expect(
-        permissionManager.checkModelPermission('user', 'user', PermissionLevel.WRITE)
+        permissionManager.hasModelPermission('test_model', 'user', 'write')
       ).toBe(false)
     })
 
     it('应该允许用户的读权限', () => {
       expect(
-        permissionManager.checkModelPermission('user', 'user', PermissionLevel.READ)
+        permissionManager.hasModelPermission('test_model', 'user', 'read')
       ).toBe(true)
     })
   })
@@ -94,11 +94,11 @@ describe('PermissionManager', () => {
     })
 
     it('应该允许管理员创建', () => {
-      expect(permissionManager.checkActionPermission('create', 'admin')).toBe(true)
+      expect(permissionManager.hasActionPermission('create', 'admin')).toBe(true)
     })
 
     it('应该拒绝用户删除', () => {
-      expect(permissionManager.checkActionPermission('delete', 'user')).toBe(false)
+      expect(permissionManager.hasActionPermission('delete', 'user')).toBe(false)
     })
   })
 
@@ -109,11 +109,11 @@ describe('PermissionManager', () => {
     })
 
     it('应该允许管理员访问设置菜单', () => {
-      expect(permissionManager.checkMenuPermission('settings', 'admin')).toBe(true)
+      expect(permissionManager.hasMenuPermission('settings', 'admin')).toBe(true)
     })
 
     it('应该拒绝用户访问设置菜单', () => {
-      expect(permissionManager.checkMenuPermission('settings', 'user')).toBe(false)
+      expect(permissionManager.hasMenuPermission('settings', 'user')).toBe(false)
     })
   })
 })

@@ -1,6 +1,24 @@
 import React, { useState } from 'react'
-import { Card, Button, List, Tag, Switch, Modal, Form, Input, Select, Space, Typography, Divider } from 'antd'
-import { PlusOutlined, PlayCircleOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons'
+import {
+  Card,
+  Button,
+  List,
+  Tag,
+  Switch,
+  Modal,
+  Form,
+  Input,
+  Select,
+  Space,
+  Typography,
+  Divider,
+} from 'antd'
+import {
+  PlusOutlined,
+  PlayCircleOutlined,
+  SettingOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons'
 import useWorkflowStore, { triggerTypes, actionTypes } from '../../store/workflowStore'
 import './styles.css'
 
@@ -8,7 +26,15 @@ const { Text } = Typography
 const { Option } = Select
 
 const WorkflowDesigner = () => {
-  const { workflows, selectedWorkflow, selectWorkflow, addWorkflow, deleteWorkflow, updateWorkflow, addAction } = useWorkflowStore()
+  const {
+    workflows,
+    selectedWorkflow,
+    selectWorkflow,
+    addWorkflow,
+    deleteWorkflow,
+    updateWorkflow,
+    addAction,
+  } = useWorkflowStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [workflowName, setWorkflowName] = useState('')
   const [workflowDesc, setWorkflowDesc] = useState('')
@@ -49,9 +75,7 @@ const WorkflowDesigner = () => {
     <div className="workflow-designer">
       <div className="workflow-header">
         <h1>🔄 工作流设计器</h1>
-        <p style={{ color: '#666', marginTop: 8 }}>
-          可视化工作流编排，自动化业务流程
-        </p>
+        <p style={{ color: '#666', marginTop: 8 }}>可视化工作流编排，自动化业务流程</p>
       </div>
 
       <div className="workflow-content">
@@ -90,7 +114,9 @@ const WorkflowDesigner = () => {
                   </div>
                 </List.Item>
               )}
-              emptyText={<div style={{ padding: 20, textAlign: 'center', color: '#999' }}>暂无工作流</div>}
+              emptyText={
+                <div style={{ padding: 20, textAlign: 'center', color: '#999' }}>暂无工作流</div>
+              }
             />
           </Card>
         </div>
@@ -110,11 +136,7 @@ const WorkflowDesigner = () => {
                     >
                       运行
                     </Button>
-                    <Button
-                      size="small"
-                      icon={<SettingOutlined />}
-                      onClick={() => {}}
-                    >
+                    <Button size="small" icon={<SettingOutlined />} onClick={() => {}}>
                       设置
                     </Button>
                     <Button
@@ -139,11 +161,7 @@ const WorkflowDesigner = () => {
                 <div className="trigger-config">
                   <div className="trigger-item">
                     {getTriggerLabel(selectedWorkflowData.trigger?.type || 'manual')}
-                    <Button
-                      type="link"
-                      size="small"
-                      onClick={() => {}}
-                    >
+                    <Button type="link" size="small" onClick={() => {}}>
                       配置
                     </Button>
                   </div>
@@ -164,16 +182,10 @@ const WorkflowDesigner = () => {
                         <div className="action-index">{index + 1}</div>
                         <div className="action-content">
                           {getActionLabel(action.type)}
-                          {action.config?.name && (
-                            <Text>{action.config.name}</Text>
-                          )}
+                          {action.config?.name && <Text>{action.config.name}</Text>}
                         </div>
                         <div className="action-buttons">
-                          <Button
-                            type="link"
-                            size="small"
-                            onClick={() => {}}
-                          >
+                          <Button type="link" size="small" onClick={() => {}}>
                             编辑
                           </Button>
                           <Button

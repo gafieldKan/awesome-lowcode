@@ -95,7 +95,7 @@ class EventEngineClass extends EventEmitter {
     const handlers = this.handlers.get(event)
     if (!handlers) return
 
-    const index = handlers.findIndex(h => h.id === callbackId)
+    const index = handlers.findIndex((h) => h.id === callbackId)
     if (index !== -1) {
       handlers.splice(index, 1)
     }
@@ -186,7 +186,7 @@ class EventEngineClass extends EventEmitter {
     interceptors.push({ fn, priority, id: this._generateId() })
     interceptors.sort((a, b) => b.priority - a.priority)
 
-    return this.interceptors.get(event).find(i => i.fn === fn)?.id
+    return this.interceptors.get(event).find((i) => i.fn === fn)?.id
   }
 
   /**
@@ -196,7 +196,7 @@ class EventEngineClass extends EventEmitter {
     const interceptors = this.interceptors.get(event)
     if (!interceptors) return
 
-    const index = interceptors.findIndex(i => i.id === interceptorId)
+    const index = interceptors.findIndex((i) => i.id === interceptorId)
     if (index !== -1) {
       interceptors.splice(index, 1)
     }

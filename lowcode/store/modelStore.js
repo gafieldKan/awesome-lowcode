@@ -40,9 +40,7 @@ const useModelStore = create(
 
       updateModel: (id, updates) => {
         set((state) => ({
-          models: state.models.map((m) =>
-            m.id === id ? { ...m, ...updates } : m
-          ),
+          models: state.models.map((m) => (m.id === id ? { ...m, ...updates } : m)),
         }))
       },
 
@@ -68,9 +66,7 @@ const useModelStore = create(
         }
         set((state) => ({
           models: state.models.map((m) =>
-            m.id === modelId
-              ? { ...m, fields: [...m.fields, newField] }
-              : m
+            m.id === modelId ? { ...m, fields: [...m.fields, newField] } : m
           ),
         }))
         return newField
@@ -82,9 +78,7 @@ const useModelStore = create(
             m.id === modelId
               ? {
                   ...m,
-                  fields: m.fields.map((f) =>
-                    f.id === fieldId ? { ...f, ...updates } : f
-                  ),
+                  fields: m.fields.map((f) => (f.id === fieldId ? { ...f, ...updates } : f)),
                 }
               : m
           ),
@@ -94,9 +88,7 @@ const useModelStore = create(
       deleteField: (modelId, fieldId) => {
         set((state) => ({
           models: state.models.map((m) =>
-            m.id === modelId
-              ? { ...m, fields: m.fields.filter((f) => f.id !== fieldId) }
-              : m
+            m.id === modelId ? { ...m, fields: m.fields.filter((f) => f.id !== fieldId) } : m
           ),
         }))
       },

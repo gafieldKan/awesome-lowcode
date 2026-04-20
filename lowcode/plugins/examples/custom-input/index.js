@@ -30,7 +30,11 @@ registerPlugin({
       props: {
         placeholder: { type: 'string', default: '请输入' },
         maxLength: { type: 'number', default: 100 },
-        format: { type: 'select', options: ['none', 'uppercase', 'lowercase', 'trim'], default: 'none' },
+        format: {
+          type: 'select',
+          options: ['none', 'uppercase', 'lowercase', 'trim'],
+          default: 'none',
+        },
         showCount: { type: 'boolean', default: true },
         required: { type: 'boolean', default: false },
       },
@@ -94,13 +98,15 @@ export const CustomInput = ({ value, onChange, placeholder, maxLength, format, s
         }}
       />
       {showCount && (
-        <span style={{
-          position: 'absolute',
-          right: 8,
-          bottom: -20,
-          fontSize: 12,
-          color: '#999',
-        }}>
+        <span
+          style={{
+            position: 'absolute',
+            right: 8,
+            bottom: -20,
+            fontSize: 12,
+            color: '#999',
+          }}
+        >
           {value?.length || 0}/{maxLength}
         </span>
       )}

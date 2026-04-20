@@ -11,16 +11,38 @@ const DraggableComponent = ({ component, isSelected, onSelect }) => {
       case 'Button':
         return <button className="component-button">{props?.text || '按钮'}</button>
       case 'Select':
-        return <select className="component-select"><option>选项 1</option></select>
+        return (
+          <select className="component-select">
+            <option>选项 1</option>
+          </select>
+        )
       case 'Checkbox':
-        return <label><input type="checkbox" /> 复选框</label>
+        return (
+          <label>
+            <input type="checkbox" /> 复选框
+          </label>
+        )
       case 'Radio':
-        return <label><input type="radio" /> 单选框</label>
+        return (
+          <label>
+            <input type="radio" /> 单选框
+          </label>
+        )
       case 'Table':
         return (
           <table className="component-table">
-            <thead><tr><th>列 1</th><th>列 2</th></tr></thead>
-            <tbody><tr><td>数据 1</td><td>数据 2</td></tr></tbody>
+            <thead>
+              <tr>
+                <th>列 1</th>
+                <th>列 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>数据 1</td>
+                <td>数据 2</td>
+              </tr>
+            </tbody>
           </table>
         )
       case 'Text':
@@ -37,17 +59,12 @@ const DraggableComponent = ({ component, isSelected, onSelect }) => {
   }
 
   return (
-    <div
-      className={`draggable-component ${isSelected ? 'selected' : ''}`}
-      onClick={onSelect}
-    >
+    <div className={`draggable-component ${isSelected ? 'selected' : ''}`} onClick={onSelect}>
       <div className="component-header">
         <span className="component-type-tag">{component.type}</span>
         <HolderOutlined className="component-drag-handle" />
       </div>
-      <div className="component-preview">
-        {renderComponent()}
-      </div>
+      <div className="component-preview">{renderComponent()}</div>
     </div>
   )
 }

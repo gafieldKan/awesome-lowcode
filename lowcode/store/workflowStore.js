@@ -56,9 +56,7 @@ const useWorkflowStore = create(
       // Update workflow
       updateWorkflow: (id, updates) => {
         set((state) => ({
-          workflows: state.workflows.map((w) =>
-            w.id === id ? { ...w, ...updates } : w
-          ),
+          workflows: state.workflows.map((w) => (w.id === id ? { ...w, ...updates } : w)),
         }))
       },
 
@@ -84,9 +82,7 @@ const useWorkflowStore = create(
         }
         set((state) => ({
           workflows: state.workflows.map((w) =>
-            w.id === workflowId
-              ? { ...w, actions: [...w.actions, newAction] }
-              : w
+            w.id === workflowId ? { ...w, actions: [...w.actions, newAction] } : w
           ),
         }))
         return newAction
@@ -99,9 +95,7 @@ const useWorkflowStore = create(
             w.id === workflowId
               ? {
                   ...w,
-                  actions: w.actions.map((a) =>
-                    a.id === actionId ? { ...a, ...updates } : a
-                  ),
+                  actions: w.actions.map((a) => (a.id === actionId ? { ...a, ...updates } : a)),
                 }
               : w
           ),
@@ -112,9 +106,7 @@ const useWorkflowStore = create(
       deleteAction: (workflowId, actionId) => {
         set((state) => ({
           workflows: state.workflows.map((w) =>
-            w.id === workflowId
-              ? { ...w, actions: w.actions.filter((a) => a.id !== actionId) }
-              : w
+            w.id === workflowId ? { ...w, actions: w.actions.filter((a) => a.id !== actionId) } : w
           ),
         }))
       },

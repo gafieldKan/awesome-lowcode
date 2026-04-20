@@ -5,13 +5,13 @@
 
 // 插件类型定义
 export const PluginType = {
-  COMPONENT: 'component',        // UI 组件插件
+  COMPONENT: 'component', // UI 组件插件
   FORM_COMPONENT: 'formComponent', // 表单组件插件
-  DATA_SOURCE: 'dataSource',     // 数据源插件
-  WORKFLOW_NODE: 'workflowNode',  // 工作流节点插件
-  TOOLBAR: 'toolbar',            // 工具栏插件
-  PANEL: 'panel',                // 面板插件
-  MIDDLEWARE: 'middleware',      // 中间件插件
+  DATA_SOURCE: 'dataSource', // 数据源插件
+  WORKFLOW_NODE: 'workflowNode', // 工作流节点插件
+  TOOLBAR: 'toolbar', // 工具栏插件
+  PANEL: 'panel', // 面板插件
+  MIDDLEWARE: 'middleware', // 中间件插件
 }
 
 // 插件生命周期
@@ -90,7 +90,7 @@ class PluginRegistryClass {
    */
   getByType(type) {
     const names = this.pluginByType.get(type) || []
-    return names.map(name => this.plugins.get(name)).filter(Boolean)
+    return names.map((name) => this.plugins.get(name)).filter(Boolean)
   }
 
   /**

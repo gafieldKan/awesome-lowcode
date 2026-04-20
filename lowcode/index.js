@@ -4,17 +4,9 @@
  */
 
 // 引擎模块
-export {
-  componentEngine,
-  ComponentDef,
-  ComponentCategory,
-} from './engine/ComponentEngine.js'
+export { componentEngine, ComponentDef, ComponentCategory } from './engine/ComponentEngine.js'
 
-export {
-  appEngine,
-  AppState,
-  defaultAppConfig,
-} from './engine/AppEngine.js'
+export { appEngine, AppState, defaultAppConfig } from './engine/AppEngine.js'
 
 export {
   eventEngine,
@@ -36,11 +28,7 @@ export {
   registerPlugin,
 } from './core/PluginRegistry.js'
 
-export {
-  schemaManager,
-  FieldTypes,
-  ComponentTypes,
-} from './core/SchemaManager.js'
+export { schemaManager, FieldTypes, ComponentTypes } from './core/SchemaManager.js'
 
 export {
   permissionManager,

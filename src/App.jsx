@@ -2,12 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { ConfigProvider, Layout, Menu } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
-import {
-  HomeOutlined,
-  EditOutlined,
-  PartitionOutlined,
-  ProjectOutlined,
-} from '@ant-design/icons'
+import { HomeOutlined, EditOutlined, PartitionOutlined, ProjectOutlined } from '@ant-design/icons'
 import DragDropEditor from '../lowcode/components/DragDropEditor'
 import ModelDesigner from '../lowcode/components/ModelDesigner'
 import WorkflowDesigner from '../lowcode/components/WorkflowDesigner'
@@ -18,9 +13,7 @@ function HomePage() {
   return (
     <div style={{ padding: 40, textAlign: 'center' }}>
       <h1>Awesome Lowcode 低代码平台</h1>
-      <p style={{ marginTop: 16, color: '#666' }}>
-        快速构建企业级应用的低代码开发平台
-      </p>
+      <p style={{ marginTop: 16, color: '#666' }}>快速构建企业级应用的低代码开发平台</p>
       <div style={{ marginTop: 32 }}>
         <Link to="/editor">
           <button
@@ -50,21 +43,15 @@ function HomePage() {
       >
         <div style={{ padding: 24, background: '#f5f5f5', borderRadius: 8 }}>
           <h3>🎨 拖拽式编辑</h3>
-          <p style={{ color: '#666', marginTop: 8 }}>
-            通过简单的拖拽操作快速构建页面
-          </p>
+          <p style={{ color: '#666', marginTop: 8 }}>通过简单的拖拽操作快速构建页面</p>
         </div>
         <div style={{ padding: 24, background: '#f5f5f5', borderRadius: 8 }}>
           <h3>📦 丰富组件</h3>
-          <p style={{ color: '#666', marginTop: 8 }}>
-            内置丰富的 UI 组件满足各种场景需求
-          </p>
+          <p style={{ color: '#666', marginTop: 8 }}>内置丰富的 UI 组件满足各种场景需求</p>
         </div>
         <div style={{ padding: 24, background: '#f5f5f5', borderRadius: 8 }}>
           <h3>🚀 实时预览</h3>
-          <p style={{ color: '#666', marginTop: 8 }}>
-            所见即所得，实时查看页面效果
-          </p>
+          <p style={{ color: '#666', marginTop: 8 }}>所见即所得，实时查看页面效果</p>
         </div>
       </div>
     </div>
@@ -120,9 +107,7 @@ function MainLayout({ children, currentPath }) {
 }
 
 function App() {
-  const [currentPath, setCurrentPath] = React.useState(
-    () => window.location.pathname
-  )
+  const [currentPath, setCurrentPath] = React.useState(() => window.location.pathname)
 
   React.useEffect(() => {
     const handlePathChange = () => {

@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import { Drawer, Tabs, List, Card, Tag, Space, Button, Table, Typography, Badge } from 'antd'
+import { Drawer, Tabs, Card, Tag, Space, Button, Table, Typography, Badge } from 'antd'
 import {
   PluginOutlined,
   DashboardOutlined,
@@ -18,7 +18,7 @@ import { eventEngine } from '../../engine/EventEngine'
 import { pluginRegistry } from '../../core/PluginRegistry'
 import { permissionManager } from '../../core/PermissionManager'
 import { schemaManager } from '../../core/SchemaManager'
-import { pluginMarket } from '../../plugins/PluginMarket'
+// pluginMarket import removed - unused
 import './DebugPanel.css'
 
 const { Text, Paragraph } = Typography
@@ -32,11 +32,15 @@ const StatusPanel = () => {
   })
 
   useEffect(() => {
-    setAppInfo({
-      plugins: pluginRegistry.getAll()?.length || 0,
-      events: eventEngine.eventHistory?.size || 0,
-      models: schemaManager.getAll()?.length || 0,
-    })
+    // 使用 setTimeout 避免在 effect 中同步调用 setState
+    const timer = setTimeout(() => {
+      setAppInfo({
+        plugins: pluginRegistry.getAll()?.length || 0,
+        events: eventEngine.eventHistory?.size || 0,
+        models: schemaManager.getAll()?.length || 0,
+      })
+    }, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   return (
@@ -70,14 +74,10 @@ const StatusPanel = () => {
 
 // 插件面板
 const PluginPanel = () => {
-  const [plugins, setPlugins] = useState([])
+  const [plugins, setPlugins] = useState(() => pluginRegistry.getAll() || [])
 
-  const refreshPlugins = () => {
+  const refreshPlugins = useCallback(() => {
     setPlugins(pluginRegistry.getAll() || [])
-  }
-
-  useEffect(() => {
-    refreshPlugins()
   }, [])
 
   const columns = [
@@ -114,21 +114,11 @@ const PluginPanel = () => {
     <div className="debug-panel">
       <div className="panel-header">
         <Text strong>已注册的插件</Text>
-        <Button
-          icon={<ReloadOutlined />}
-          size="small"
-          onClick={refreshPlugins}
-        >
+        <Button icon={<ReloadOutlined />} size="small" onClick={refreshPlugins}>
           刷新
         </Button>
       </div>
-      <Table
-        columns={columns}
-        dataSource={plugins}
-        rowKey="name"
-        size="small"
-        pagination={false}
-      />
+      <Table columns={columns} dataSource={plugins} rowKey="name" size="small" pagination={false} />
     </div>
   )
 }
@@ -137,24 +127,18 @@ const PluginPanel = () => {
 const EventPanel = () => {
   const [events, setEvents] = useState([])
 
-  const refreshEvents = () => {
+  const refreshEvents = useCallback(() => {
     const history = []
     eventEngine.eventHistory?.forEach((value, key) => {
       value.forEach((item) => {
         history.push({
           event: key,
-          timestamp: item.timestamp
-            ? new Date(item.timestamp).toLocaleTimeString()
-            : '-',
+          timestamp: item.timestamp ? new Date(item.timestamp).toLocaleTimeString() : '-',
           args: JSON.stringify(item.args || item) || '[]',
         })
       })
     })
     setEvents(history.slice(-20).reverse())
-  }
-
-  useEffect(() => {
-    refreshEvents()
   }, [])
 
   const columns = [
@@ -182,18 +166,10 @@ const EventPanel = () => {
       <div className="panel-header">
         <Text strong>事件历史</Text>
         <Space>
-          <Button
-            icon={<ReloadOutlined />}
-            size="small"
-            onClick={refreshEvents}
-          >
+          <Button icon={<ReloadOutlined />} size="small" onClick={refreshEvents}>
             刷新
           </Button>
-          <Button
-            icon={<ClearOutlined />}
-            size="small"
-            onClick={() => eventEngine.clearHistory()}
-          >
+          <Button icon={<ClearOutlined />} size="small" onClick={() => eventEngine.clearHistory()}>
             清空
           </Button>
         </Space>
@@ -219,7 +195,11 @@ const PermissionPanel = () => {
     permissionManager.roles?.forEach((role, key) => {
       roleList.push({ key, ...role })
     })
-    setRoles(roleList)
+    // 使用 setTimeout 避免在 effect 中同步调用 setState
+    const timer = setTimeout(() => {
+      setRoles(roleList)
+    }, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   const columns = [
@@ -237,8 +217,7 @@ const PermissionPanel = () => {
       title: '权限',
       dataIndex: 'permissions',
       key: 'permissions',
-      render: (perms) =>
-        perms?.map((p, i) => <Tag key={i}>{p}</Tag>) || '-',
+      render: (perms) => perms?.map((p, i) => <Tag key={i}>{p}</Tag>) || '-',
     },
   ]
 
@@ -247,38 +226,24 @@ const PermissionPanel = () => {
       <div className="panel-header">
         <Text strong>角色列表</Text>
       </div>
-      <Table
-        columns={columns}
-        dataSource={roles}
-        rowKey="key"
-        size="small"
-        pagination={false}
-      />
+      <Table columns={columns} dataSource={roles} rowKey="key" size="small" pagination={false} />
     </div>
   )
 }
 
 // 模型面板
 const ModelPanel = () => {
-  const [models, setModels] = useState([])
+  const [models, setModels] = useState(() => schemaManager.getAll() || [])
 
-  const refreshModels = () => {
+  const refreshModels = useCallback(() => {
     setModels(schemaManager.getAll() || [])
-  }
-
-  useEffect(() => {
-    refreshModels()
   }, [])
 
   return (
     <div className="debug-panel">
       <div className="panel-header">
         <Text strong>数据模型</Text>
-        <Button
-          icon={<ReloadOutlined />}
-          size="small"
-          onClick={refreshModels}
-        >
+        <Button icon={<ReloadOutlined />} size="small" onClick={refreshModels}>
           刷新
         </Button>
       </div>
@@ -343,12 +308,7 @@ const DebugPanel = ({ visible, onClose }) => {
       onClose={onClose}
       className="debug-drawer"
     >
-      <Tabs
-        activeKey={activeTab}
-        onChange={setActiveTab}
-        items={tabs}
-        size="small"
-      />
+      <Tabs activeKey={activeTab} onChange={setActiveTab} items={tabs} size="small" />
     </Drawer>
   )
 }

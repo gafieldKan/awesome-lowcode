@@ -8,14 +8,14 @@ const AutoFormGenerator = () => {
   const { models, selectedModel } = useModelStore()
   const [formData, setFormData] = useState({})
 
-  const modelData = models.find(m => m.id === selectedModel)
+  const modelData = models.find((m) => m.id === selectedModel)
 
   if (!modelData) {
     return (
       <div style={{ padding: 20 }}>
         <Alert
           message="请选择一个模型"
-          description="在 &quot; 模型设计&quot; 标签页中选择一个数据模型以生成表单"
+          description='在 " 模型设计" 标签页中选择一个数据模型以生成表单'
           type="info"
         />
       </div>
@@ -69,8 +69,7 @@ const AutoFormGenerator = () => {
     }
   }
 
-  const handleSubmit = (values) => {
-    // console.warn('Form submitted:', values)
+  const handleSubmit = (_values) => {
     alert('表单已提交，请查看控制台输出')
   }
 
@@ -95,11 +94,7 @@ const AutoFormGenerator = () => {
           {modelData.fields && modelData.fields.length > 0 ? (
             modelData.fields.map((field) => renderField(field))
           ) : (
-            <Alert
-              message="暂无字段"
-              description="请先在模型中添加字段"
-              type="warning"
-            />
+            <Alert message="暂无字段" description="请先在模型中添加字段" type="warning" />
           )}
           <Form.Item style={{ marginTop: 24 }}>
             <Space>

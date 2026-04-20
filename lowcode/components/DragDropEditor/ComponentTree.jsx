@@ -1,14 +1,10 @@
 import React from 'react'
 import { Card, Tree, Button, Space } from 'antd'
-import {
-  DeleteOutlined,
-  SettingOutlined,
-} from '@ant-design/icons'
+import { DeleteOutlined, SettingOutlined } from '@ant-design/icons'
 import useEditorStore from '../../store/editorStore'
 
 const ComponentTree = () => {
-  const { components, selectComponent, selectedComponent, removeComponent } =
-    useEditorStore()
+  const { components, selectComponent, selectedComponent, removeComponent } = useEditorStore()
 
   const treeData = components.map((comp) => ({
     title: (
@@ -50,9 +46,7 @@ const ComponentTree = () => {
             onSelect={(keys) => selectComponent(keys[0])}
           />
         ) : (
-          <div style={{ padding: 20, textAlign: 'center', color: '#999' }}>
-            暂无组件
-          </div>
+          <div style={{ padding: 20, textAlign: 'center', color: '#999' }}>暂无组件</div>
         )}
       </Card>
     </div>

@@ -75,7 +75,7 @@ class PluginMarketClass extends EventEmitter {
    * 初始化内置插件
    */
   _initBuiltins() {
-    Object.values(BuiltinPlugins).forEach(plugin => {
+    Object.values(BuiltinPlugins).forEach((plugin) => {
       this.plugins.set(plugin.name, { ...plugin })
       this.installedPlugins.add(plugin.name)
       this.enabledPlugins.add(plugin.name)
@@ -101,43 +101,35 @@ class PluginMarketClass extends EventEmitter {
    * 获取已安装的插件
    */
   getInstalledPlugins() {
-    return Array.from(this.installedPlugins).map(name =>
-      this.plugins.get(name)
-    )
+    return Array.from(this.installedPlugins).map((name) => this.plugins.get(name))
   }
 
   /**
    * 获取已启用的插件
    */
   getEnabledPlugins() {
-    return Array.from(this.enabledPlugins).map(name =>
-      this.plugins.get(name)
-    )
+    return Array.from(this.enabledPlugins).map((name) => this.plugins.get(name))
   }
 
   /**
    * 获取可用的插件（未安装）
    */
   getAvailablePlugins() {
-    return Array.from(this.plugins.values()).filter(
-      p => !this.installedPlugins.has(p.name)
-    )
+    return Array.from(this.plugins.values()).filter((p) => !this.installedPlugins.has(p.name))
   }
 
   /**
    * 获取可更新的插件
    */
   getUpdatablePlugins() {
-    return Array.from(this.plugins.values()).filter(
-      p => p.state === PluginState.UPDATABLE
-    )
+    return Array.from(this.plugins.values()).filter((p) => p.state === PluginState.UPDATABLE)
   }
 
   /**
    * 按类型获取插件
    */
   getPluginsByType(type) {
-    return Array.from(this.plugins.values()).filter(p => p.type === type)
+    return Array.from(this.plugins.values()).filter((p) => p.type === type)
   }
 
   /**
@@ -204,9 +196,7 @@ class PluginMarketClass extends EventEmitter {
     // 检查是否有其他插件依赖它
     const dependents = this._getDependents(pluginName)
     if (dependents.length > 0) {
-      throw new Error(
-        `无法卸载，以下插件依赖此插件：${dependents.join(', ')}`
-      )
+      throw new Error(`无法卸载，以下插件依赖此插件：${dependents.join(', ')}`)
     }
 
     this.installedPlugins.delete(pluginName)
@@ -276,9 +266,7 @@ class PluginMarketClass extends EventEmitter {
 
     if (this.registryUrl) {
       try {
-        const response = await fetch(
-          `${this.registryUrl}/plugins/${pluginName}/latest`
-        )
+        const response = await fetch(`${this.registryUrl}/plugins/${pluginName}/latest`)
         if (!response.ok) {
           throw new Error('无法获取最新版本')
         }
@@ -321,9 +309,7 @@ class PluginMarketClass extends EventEmitter {
     for (const plugin of this.plugins.values()) {
       if (this.installedPlugins.has(plugin.name)) {
         try {
-          const response = await fetch(
-            `${this.registryUrl}/plugins/${plugin.name}/latest`
-          )
+          const response = await fetch(`${this.registryUrl}/plugins/${plugin.name}/latest`)
           if (response.ok) {
             const latest = await response.json()
             if (latest.version !== plugin.version) {
@@ -376,9 +362,7 @@ class PluginMarketClass extends EventEmitter {
       }
 
       if (!this._satisfiesVersion(depPlugin.version, versionRange)) {
-        errors.push(
-          `${depName} 版本不匹配 (需要 ${versionRange}, 当前 ${depPlugin.version})`
-        )
+        errors.push(`${depName} 版本不匹配 (需要 ${versionRange}, 当前 ${depPlugin.version})`)
       }
     }
 
@@ -443,17 +427,14 @@ class PluginMarketClass extends EventEmitter {
         }
         const plugins = await response.json()
 
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
           const existing = this.plugins.get(plugin.name)
           if (existing) {
             // 更新现有插件信息
             this.plugins.set(plugin.name, {
               ...existing,
               latestVersion: plugin.version,
-              state:
-                plugin.version !== existing.version
-                  ? PluginState.UPDATABLE
-                  : existing.state,
+              state: plugin.version !== existing.version ? PluginState.UPDATABLE : existing.state,
             })
           } else {
             // 添加新插件

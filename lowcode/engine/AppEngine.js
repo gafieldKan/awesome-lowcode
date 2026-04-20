@@ -218,7 +218,7 @@ class AppEngineClass extends EventEmitter {
   removeRoute(path) {
     const router = this.modules.get('router')
     if (router) {
-      router.routes = router.routes.filter(r => r.path !== path)
+      router.routes = router.routes.filter((r) => r.path !== path)
       this.emit('route:remove', { path })
     }
     return this

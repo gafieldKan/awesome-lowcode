@@ -82,9 +82,7 @@ class PerformanceMonitor {
       const limit = performance.memory.jsHeapSizeLimit
 
       if (used > this.thresholds.memory) {
-        console.warn(
-          `[Performance] 内存使用过高：${(used / 1024 / 1024).toFixed(2)}MB`
-        )
+        console.warn(`[Performance] 内存使用过高：${(used / 1024 / 1024).toFixed(2)}MB`)
       }
 
       this._record('memory', {
@@ -122,9 +120,7 @@ class PerformanceMonitor {
     this._record('timer', { name, duration })
 
     if (duration > this.thresholds.render) {
-      console.warn(
-        `[Performance] 慢操作：${name} - ${duration.toFixed(2)}ms`
-      )
+      console.warn(`[Performance] 慢操作：${name} - ${duration.toFixed(2)}ms`)
     }
 
     return duration
@@ -166,9 +162,7 @@ class PerformanceMonitor {
     this._record('render', { component: componentName, duration })
 
     if (duration > this.thresholds.render) {
-      console.warn(
-        `[Performance] 慢渲染：${componentName} - ${duration.toFixed(2)}ms`
-      )
+      console.warn(`[Performance] 慢渲染：${componentName} - ${duration.toFixed(2)}ms`)
     }
   }
 
@@ -194,7 +188,7 @@ class PerformanceMonitor {
   /**
    * 触发事件
    */
-  emit(event, data) {
+  emit(_event, _data) {
     // 简单的事件系统
   }
 
@@ -211,8 +205,7 @@ class PerformanceMonitor {
             limit: performance.memory.jsHeapSizeLimit,
           }
         : null,
-      navigation:
-        performance.getEntriesByType('navigation')?.[0]?.toJSON() || null,
+      navigation: performance.getEntriesByType('navigation')?.[0]?.toJSON() || null,
       resources: performance.getEntriesByType('resource').map((r) => ({
         name: r.name,
         duration: r.duration,
@@ -257,10 +250,8 @@ export const profileAsync = performanceMonitor.profileAsync.bind(performanceMoni
 
 // React 专用 Hook
 export const useRenderMonitor = (componentName, enabled = true) => {
-  if (typeof React === 'undefined') return
-
   React.useEffect(() => {
-    if (!enabled) return
+    if (!enabled || typeof PerformanceObserver === 'undefined') return
 
     const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {

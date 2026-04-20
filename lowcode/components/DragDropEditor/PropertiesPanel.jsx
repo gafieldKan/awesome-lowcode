@@ -53,17 +53,13 @@ const PropertiesPanel = () => {
             <Form.Item label="占位符">
               <Input
                 value={selected.props?.placeholder || ''}
-                onChange={(e) =>
-                  handlePropChange('placeholder', e.target.value)
-                }
+                onChange={(e) => handlePropChange('placeholder', e.target.value)}
               />
             </Form.Item>
             <Form.Item label="是否必填">
               <Switch
                 checked={selected.props?.required || false}
-                onChange={(checked) =>
-                  handlePropChange('required', checked)
-                }
+                onChange={(checked) => handlePropChange('required', checked)}
               />
             </Form.Item>
           </>

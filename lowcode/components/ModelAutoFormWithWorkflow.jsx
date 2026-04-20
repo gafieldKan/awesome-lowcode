@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 function ModelAutoFormWithWorkflow() {
-    // Model auto form with workflow logic here
-    return <div>Model Auto Form with Workflow</div>;
+  // Model auto form with workflow logic here
+  return <div>Model Auto Form with Workflow</div>
 }
 
-export default ModelAutoFormWithWorkflow;
+export default ModelAutoFormWithWorkflow

@@ -23,6 +23,16 @@ export {
 } from './EventEngine.js'
 
 // 核心模块重新导出
-export { pluginRegistry, PluginType, PluginLifecycle, registerPlugin } from '../core/PluginRegistry.js'
+export {
+  pluginRegistry,
+  PluginType,
+  PluginLifecycle,
+  registerPlugin,
+} from '../core/PluginRegistry.js'
 export { schemaManager, FieldTypes, ComponentTypes } from '../core/SchemaManager.js'
-export { permissionManager, PermissionLevel, PermissionType, defaultRoles } from '../core/PermissionManager.js'
+export {
+  permissionManager,
+  PermissionLevel,
+  PermissionType,
+  defaultRoles,
+} from '../core/PermissionManager.js'

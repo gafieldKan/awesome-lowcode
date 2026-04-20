@@ -178,7 +178,7 @@ class SchemaManagerClass extends EventEmitter {
       const schemas = await response.json()
 
       // 存储远程 schema
-      schemas.forEach(schema => {
+      schemas.forEach((schema) => {
         this.remoteSchemas.set(schema.id, schema)
         this.schemas.set(schema.id, schema)
       })
@@ -231,7 +231,7 @@ class SchemaManagerClass extends EventEmitter {
     try {
       const schema = JSON.parse(jsonString)
       if (Array.isArray(schema)) {
-        schema.forEach(s => this.registerModel(s.id, s))
+        schema.forEach((s) => this.registerModel(s.id, s))
       } else {
         this.registerModel(schema.id, schema)
       }

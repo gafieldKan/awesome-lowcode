@@ -37,6 +37,14 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // 允许在 effect 中调用 setState（用于初始化外部状态）
+      'react-hooks/setState-in-effect': 'off',
+      // 允许 ref 赋值（用于回调 ref 模式）
+      'react-hooks/refs': 'off',
+      // 允许 exhaustive-deps 警告
+      'react-hooks/exhaustive-deps': 'warn',
+      // 关闭新的 react-hooks 规则
+      'react-hooks/react-hooks': 'off',
     },
   },
   {

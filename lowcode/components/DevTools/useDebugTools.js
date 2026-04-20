@@ -9,11 +9,7 @@ import { eventEngine } from '../../engine/EventEngine'
  * 调试模式 Hook
  */
 export const useDebugMode = (options = {}) => {
-  const {
-    enabled = true,
-    trackEvents = true,
-    trackPerformance = true,
-  } = options
+  const { enabled = true, trackEvents = true } = options
 
   useEffect(() => {
     if (enabled && trackEvents) {
@@ -48,8 +44,8 @@ export const useEventTracker = (events = [], callback) => {
     const handlers = []
 
     events.forEach((eventName) => {
-      const handlerId = eventEngine.on(eventName, (...args) => {
-        callbackRef.current?.(eventName, ...args)
+      const handlerId = eventEngine.on(eventName, (..._args) => {
+        callbackRef.current?.(eventName)
       })
       handlers.push({ event: eventName, id: handlerId })
     })
@@ -75,30 +71,31 @@ export const usePerformanceMonitor = (options = {}) => {
   const renderTimes = useRef([])
   const frameIds = useRef([])
 
-  const trackRender = useCallback((componentName) => {
-    if (!trackRerenders) return
+  const trackRender = useCallback(
+    (componentName) => {
+      if (!trackRerenders) return
 
-    const startTime = performance.now()
-    const frameId = requestAnimationFrame(() => {
-      const duration = performance.now() - startTime
-      renderTimes.current.push({ componentName, duration, time: Date.now() })
+      const startTime = performance.now()
+      const frameId = requestAnimationFrame(() => {
+        const duration = performance.now() - startTime
+        renderTimes.current.push({ componentName, duration, time: Date.now() })
 
-      // 保留最近 100 次记录
-      if (renderTimes.current.length > 100) {
-        renderTimes.current.shift()
-      }
+        // 保留最近 100 次记录
+        if (renderTimes.current.length > 100) {
+          renderTimes.current.shift()
+        }
 
-      // 检测慢渲染
-      if (duration > threshold) {
-        console.warn(
-          `[Performance] 慢渲染：${componentName} - ${duration.toFixed(2)}ms`
-        )
-      }
-    })
+        // 检测慢渲染
+        if (duration > threshold) {
+          console.warn(`[Performance] 慢渲染：${componentName} - ${duration.toFixed(2)}ms`)
+        }
+      })
 
-    frameIds.current.push(frameId)
-    return () => cancelAnimationFrame(frameId)
-  }, [trackRerenders, threshold])
+      frameIds.current.push(frameId)
+      return () => cancelAnimationFrame(frameId)
+    },
+    [trackRerenders, threshold]
+  )
 
   // 监控长任务 (Long Tasks API)
   useEffect(() => {
@@ -107,10 +104,7 @@ export const usePerformanceMonitor = (options = {}) => {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (entry.duration > threshold) {
-          console.warn(
-            `[Performance] 长任务：${entry.duration.toFixed(2)}ms`,
-            entry
-          )
+          console.warn(`[Performance] 长任务：${entry.duration.toFixed(2)}ms`, entry)
         }
       }
     })
@@ -125,7 +119,10 @@ export const usePerformanceMonitor = (options = {}) => {
   // 清理
   useEffect(() => {
     return () => {
-      frameIds.current.forEach((id) => cancelAnimationFrame(id))
+      // 使用函数式更新避免直接访问 ref
+      requestAnimationFrame(() => {
+        frameIds.current.forEach((id) => cancelAnimationFrame(id))
+      })
     }
   }, [])
 

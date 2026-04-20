@@ -12,15 +12,15 @@ export const Operations = {
   CREATE: 'create',
   DELETE: 'delete',
   UPDATE: 'update',
-  SUBMIT: 'submit',    // 提交审批
-  CANCEL: 'cancel',    // 取消/作废
-  APPROVE: 'approve',  // 审批
-  REJECT: 'reject',    // 拒绝
-  SHARE: 'share',      // 分享
-  EXPORT: 'export',    // 导出
-  IMPORT: 'import',    // 导入
-  PRINT: 'print',      // 打印
-  FULL: 'full',        // 完全控制
+  SUBMIT: 'submit', // 提交审批
+  CANCEL: 'cancel', // 取消/作废
+  APPROVE: 'approve', // 审批
+  REJECT: 'reject', // 拒绝
+  SHARE: 'share', // 分享
+  EXPORT: 'export', // 导出
+  IMPORT: 'import', // 导入
+  PRINT: 'print', // 打印
+  FULL: 'full', // 完全控制
 }
 
 // 权限级别
@@ -34,11 +34,11 @@ export const PermissionLevel = {
 
 // 数据权限范围
 export const DataScope = {
-  ALL: 'all',              // 全部数据
-  MINE: 'mine',            // 仅本人数据
-  DEPT: 'dept',            // 本部门数据
-  DEPT_AND_SUB: 'dept_and_sub',  // 本部门及子部门数据
-  CUSTOM: 'custom',        // 自定义范围
+  ALL: 'all', // 全部数据
+  MINE: 'mine', // 仅本人数据
+  DEPT: 'dept', // 本部门数据
+  DEPT_AND_SUB: 'dept_and_sub', // 本部门及子部门数据
+  CUSTOM: 'custom', // 自定义范围
 }
 
 // 默认角色定义
@@ -82,7 +82,7 @@ export const createPermissionDescriptor = (type, resource, action) => {
 class PermissionManagerClass {
   constructor() {
     this.roles = new Map()
-    this.userRoles = new Map()  // 用户可以有多个角色
+    this.userRoles = new Map() // 用户可以有多个角色
     this.roleGroups = new Map() // 角色组（角色继承）
     this.modelPermissions = new Map()
     this.fieldPermissions = new Map()
@@ -92,7 +92,7 @@ class PermissionManagerClass {
     this.permissionCache = new Map()
 
     // 初始化默认角色
-    Object.values(defaultRoles).forEach(role => {
+    Object.values(defaultRoles).forEach((role) => {
       this.registerRole(role)
     })
   }
@@ -171,7 +171,7 @@ class PermissionManagerClass {
    */
   getUserRoles(userId) {
     const roleIds = this.userRoles.get(userId) || []
-    return roleIds.map(id => this.roles.get(id)).filter(Boolean)
+    return roleIds.map((id) => this.roles.get(id)).filter(Boolean)
   }
 
   /**
@@ -255,7 +255,12 @@ class PermissionManagerClass {
   /**
    * 设置字段权限
    */
-  setFieldPermission(modelId, fieldId, roleId, { visible = true, readable = true, writable = false } = {}) {
+  setFieldPermission(
+    modelId,
+    fieldId,
+    roleId,
+    { visible = true, readable = true, writable = false } = {}
+  ) {
     const key = `${modelId}:${fieldId}:${roleId}`
     this.fieldPermissions.set(key, { visible, readable, writable })
     this.permissionCache.clear()
@@ -401,12 +406,12 @@ class PermissionManagerClass {
         allPermissions.add('*')
         break
       }
-      role.permissions.forEach(p => allPermissions.add(p))
+      role.permissions.forEach((p) => allPermissions.add(p))
     }
 
     const checker = {
       hasPermission: (perm) => allPermissions.has('*') || allPermissions.has(perm),
-      roles: roles.map(r => r.id),
+      roles: roles.map((r) => r.id),
     }
 
     this.permissionCache.set(userId, checker)
@@ -419,7 +424,7 @@ class PermissionManagerClass {
    * 批量设置权限
    */
   batchSetPermissions(permissions) {
-    permissions.forEach(perm => {
+    permissions.forEach((perm) => {
       const { type, resource, role, ...config } = perm
       if (type === 'model') {
         this.setModelPermission(resource, role, config.operations || [])
@@ -453,7 +458,8 @@ class PermissionManagerClass {
     for (const role of roles) {
       const ops = this.getModelOperations(modelId, role.id)
       if (ops.includes(Operations.READ)) permissions.canRead = true
-      if (ops.includes(Operations.WRITE) || ops.includes(Operations.UPDATE)) permissions.canWrite = true
+      if (ops.includes(Operations.WRITE) || ops.includes(Operations.UPDATE))
+        permissions.canWrite = true
       if (ops.includes(Operations.CREATE)) permissions.canCreate = true
       if (ops.includes(Operations.DELETE)) permissions.canDelete = true
       if (ops.includes(Operations.SUBMIT)) permissions.canSubmit = true
@@ -483,7 +489,7 @@ class PermissionManagerClass {
     this.roleGroups.clear()
 
     // 重新注册默认角色
-    Object.values(defaultRoles).forEach(role => {
+    Object.values(defaultRoles).forEach((role) => {
       this.registerRole(role)
     })
   }

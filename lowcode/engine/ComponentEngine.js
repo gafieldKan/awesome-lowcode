@@ -7,12 +7,12 @@ import { EventEmitter } from 'events'
 
 // 组件分类
 export const ComponentCategory = {
-  BASIC: 'basic',         // 基础组件
-  FORM: 'form',           // 表单组件
-  LAYOUT: 'layout',       // 布局组件
-  DISPLAY: 'display',     // 展示组件
-  FEEDBACK: 'feedback',   // 反馈组件
-  CUSTOM: 'custom',       // 自定义组件
+  BASIC: 'basic', // 基础组件
+  FORM: 'form', // 表单组件
+  LAYOUT: 'layout', // 布局组件
+  DISPLAY: 'display', // 展示组件
+  FEEDBACK: 'feedback', // 反馈组件
+  CUSTOM: 'custom', // 自定义组件
 }
 
 // 组件定义
@@ -48,9 +48,7 @@ class ComponentEngineClass extends EventEmitter {
       throw new Error('组件必须有 id 和 type')
     }
 
-    const def = componentDef instanceof ComponentDef
-      ? componentDef
-      : new ComponentDef(componentDef)
+    const def = componentDef instanceof ComponentDef ? componentDef : new ComponentDef(componentDef)
 
     this.components.set(def.id, def)
     this.registeredTypes.add(def.type)
@@ -76,7 +74,7 @@ class ComponentEngineClass extends EventEmitter {
    * 按类型获取组件
    */
   getByType(type) {
-    return Array.from(this.components.values()).filter(c => c.type === type)
+    return Array.from(this.components.values()).filter((c) => c.type === type)
   }
 
   /**
@@ -84,7 +82,7 @@ class ComponentEngineClass extends EventEmitter {
    */
   getByCategory(category) {
     const ids = this.componentByCategory.get(category) || []
-    return ids.map(id => this.components.get(id)).filter(Boolean)
+    return ids.map((id) => this.components.get(id)).filter(Boolean)
   }
 
   /**
@@ -116,10 +114,9 @@ class ComponentEngineClass extends EventEmitter {
     const component = this.components.get(componentId)
     if (component) {
       this.components.delete(componentId)
-      this.componentByCategory.get(component.category)?.splice(
-        this.componentByCategory.get(component.category).indexOf(componentId),
-        1
-      )
+      this.componentByCategory
+        .get(component.category)
+        ?.splice(this.componentByCategory.get(component.category).indexOf(componentId), 1)
       this.emit('component:removed', { componentId })
     }
     return this

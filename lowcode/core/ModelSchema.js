@@ -7,50 +7,50 @@
 // 字段类型定义
 export const FieldType = {
   // 基础类型
-  STRING: 'string',           // 字符串
-  TEXT: 'text',               // 长文本
-  RICH_TEXT: 'richText',      // 富文本
-  NUMBER: 'number',           // 数字
-  INTEGER: 'integer',         // 整数
-  FLOAT: 'float',             // 浮点数
-  BOOLEAN: 'boolean',         // 布尔值
+  STRING: 'string', // 字符串
+  TEXT: 'text', // 长文本
+  RICH_TEXT: 'richText', // 富文本
+  NUMBER: 'number', // 数字
+  INTEGER: 'integer', // 整数
+  FLOAT: 'float', // 浮点数
+  BOOLEAN: 'boolean', // 布尔值
 
   // 日期时间
-  DATE: 'date',               // 日期
-  DATETIME: 'datetime',       // 日期时间
-  TIME: 'time',               // 时间
+  DATE: 'date', // 日期
+  DATETIME: 'datetime', // 日期时间
+  TIME: 'time', // 时间
 
   // 选择类型
-  SELECT: 'select',           // 单选
+  SELECT: 'select', // 单选
   MULTI_SELECT: 'multiSelect', // 多选
-  RADIO: 'radio',             // 单选按钮
-  CHECKBOX: 'checkbox',       // 复选框
-  TAG: 'tag',                 // 标签选择
+  RADIO: 'radio', // 单选按钮
+  CHECKBOX: 'checkbox', // 复选框
+  TAG: 'tag', // 标签选择
 
   // 文件类型
-  IMAGE: 'image',             // 图片
-  FILE: 'file',               // 文件
-  IMAGES: 'images',           // 多图片
-  FILES: 'files',             // 多文件
+  IMAGE: 'image', // 图片
+  FILE: 'file', // 文件
+  IMAGES: 'images', // 多图片
+  FILES: 'files', // 多文件
 
   // 关联类型
-  LINK: 'link',               // 链接
-  REFERENCE: 'reference',     // 引用其他模型
-  TABLE: 'table',             // 子表
+  LINK: 'link', // 链接
+  REFERENCE: 'reference', // 引用其他模型
+  TABLE: 'table', // 子表
 
   // 高级类型
-  JSON: 'json',               // JSON 对象
-  CODE: 'code',               // 代码
-  COLOR: 'color',             // 颜色选择
-  RATING: 'rating',           // 评分
-  PERCENT: 'percent',         // 百分比
-  CURRENCY: 'currency',       // 货币
-  PHONE: 'phone',             // 电话
-  EMAIL: 'email',             // 邮箱
-  URL: 'url',                 // URL
-  ADDRESS: 'address',         // 地址
-  FORMULA: 'formula',         // 公式计算
-  AUTO_NUMBER: 'autoNumber',  // 自动编号
+  JSON: 'json', // JSON 对象
+  CODE: 'code', // 代码
+  COLOR: 'color', // 颜色选择
+  RATING: 'rating', // 评分
+  PERCENT: 'percent', // 百分比
+  CURRENCY: 'currency', // 货币
+  PHONE: 'phone', // 电话
+  EMAIL: 'email', // 邮箱
+  URL: 'url', // URL
+  ADDRESS: 'address', // 地址
+  FORMULA: 'formula', // 公式计算
+  AUTO_NUMBER: 'autoNumber', // 自动编号
 }
 
 // 验证规则类型
@@ -130,9 +130,13 @@ export class FieldConfig {
       case 'max':
         return value > rule.value ? rule.message || `不能大于 ${rule.value}` : null
       case 'minLength':
-        return String(value).length < rule.value ? rule.message || `长度不能小于 ${rule.value}` : null
+        return String(value).length < rule.value
+          ? rule.message || `长度不能小于 ${rule.value}`
+          : null
       case 'maxLength':
-        return String(value).length > rule.value ? rule.message || `长度不能大于 ${rule.value}` : null
+        return String(value).length > rule.value
+          ? rule.message || `长度不能大于 ${rule.value}`
+          : null
       case 'email':
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return !emailRegex.test(value) ? rule.message || '邮箱格式不正确' : null
@@ -165,7 +169,7 @@ export class ModelConfig {
     this.name = config.name
     this.label = config.label || config.name
     this.description = config.description || ''
-    this.fields = (config.fields || []).map(f => new FieldConfig(f))
+    this.fields = (config.fields || []).map((f) => new FieldConfig(f))
     this.timestamps = config.timestamps ?? true
     this.softDelete = config.softDelete ?? false
     this.indexes = config.indexes || []
@@ -179,7 +183,7 @@ export class ModelConfig {
    * 获取字段
    */
   getField(fieldName) {
-    return this.fields.find(f => f.name === fieldName)
+    return this.fields.find((f) => f.name === fieldName)
   }
 
   /**
@@ -194,7 +198,7 @@ export class ModelConfig {
    * 移除字段
    */
   removeField(fieldName) {
-    this.fields = this.fields.filter(f => f.name !== fieldName)
+    this.fields = this.fields.filter((f) => f.name !== fieldName)
     return this
   }
 
@@ -202,7 +206,7 @@ export class ModelConfig {
    * 获取所有必填字段
    */
   getRequiredFields() {
-    return this.fields.filter(f => f.required)
+    return this.fields.filter((f) => f.required)
   }
 
   /**
@@ -238,7 +242,7 @@ export class ModelConfig {
         acc[field.name] = this._fieldToSchema(field)
         return acc
       }, {}),
-      required: this.getRequiredFields().map(f => f.name),
+      required: this.getRequiredFields().map((f) => f.name),
     }
   }
 
@@ -278,10 +282,10 @@ export class ModelConfig {
 
 // 关联关系类型
 export const RelationType = {
-  HAS_ONE: 'hasOne',           // 一对一
-  HAS_MANY: 'hasMany',         // 一对多
-  BELONGS_TO: 'belongsTo',     // 多对一
-  MANY_TO_MANY: 'manyToMany',  // 多对多
+  HAS_ONE: 'hasOne', // 一对一
+  HAS_MANY: 'hasMany', // 一对多
+  BELONGS_TO: 'belongsTo', // 多对一
+  MANY_TO_MANY: 'manyToMany', // 多对多
 }
 
 // 关联配置

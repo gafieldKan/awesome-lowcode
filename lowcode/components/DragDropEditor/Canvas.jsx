@@ -5,7 +5,8 @@ import useEditorStore from '../../store/editorStore'
 import DraggableComponent from './DraggableComponent'
 
 const Canvas = () => {
-  const { components, selectedComponent, selectComponent, removeComponent, clearCanvas } = useEditorStore()
+  const { components, selectedComponent, selectComponent, removeComponent, clearCanvas } =
+    useEditorStore()
 
   const handleDrop = (e) => {
     e.preventDefault()
@@ -46,11 +47,7 @@ const Canvas = () => {
           </Button>
         )}
       </div>
-      <div
-        className="canvas"
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-      >
+      <div className="canvas" onDrop={handleDrop} onDragOver={handleDragOver}>
         {components.length === 0 ? (
           <Empty description="从左侧拖拽组件到此处" />
         ) : (

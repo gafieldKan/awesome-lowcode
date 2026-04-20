@@ -3,17 +3,17 @@
  * 可视化工作流编排 - 基于节点和连线
  */
 
-import React, { useState, useRef, useEffect } from 'react'
-import { Card, Button, Select, Tag } from 'antd'
-import { PlusOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons'
+import React, { useState, useRef } from 'react'
+import { Button, Select, Tag } from 'antd'
+import { DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import './FlowCanvas.css'
 
 // 节点类型
 const NODE_TYPES = {
-  TRIGGER: 'trigger',    // 触发器节点
-  ACTION: 'action',      // 操作节点
+  TRIGGER: 'trigger', // 触发器节点
+  ACTION: 'action', // 操作节点
   CONDITION: 'condition', // 条件节点
-  END: 'end',            // 结束节点
+  END: 'end', // 结束节点
 }
 
 // 触发器类型
@@ -45,7 +45,7 @@ const ACTION_TYPES = [
 /**
  * 流程节点组件
  */
-const FlowNode = ({ node, isSelected, onSelect, onDelete, onUpdate, readOnly }) => {
+const FlowNode = ({ node, isSelected, onSelect, onDelete, _onUpdate, readOnly = false }) => {
   const getNodeStyle = () => {
     const baseStyle = {
       padding: '12px 16px',
@@ -71,11 +71,16 @@ const FlowNode = ({ node, isSelected, onSelect, onDelete, onUpdate, readOnly }) 
 
   const getIcon = () => {
     switch (node.type) {
-      case NODE_TYPES.TRIGGER: return '🔔'
-      case NODE_TYPES.ACTION: return '⚡'
-      case NODE_TYPES.CONDITION: return '❓'
-      case NODE_TYPES.END: return '🏁'
-      default: return '📍'
+      case NODE_TYPES.TRIGGER:
+        return '🔔'
+      case NODE_TYPES.ACTION:
+        return '⚡'
+      case NODE_TYPES.CONDITION:
+        return '❓'
+      case NODE_TYPES.END:
+        return '🏁'
+      default:
+        return '📍'
     }
   }
 
@@ -101,14 +106,16 @@ const FlowNode = ({ node, isSelected, onSelect, onDelete, onUpdate, readOnly }) 
           />
         )}
       </div>
-      {node.description && (
-        <div className="flow-node-desc">{node.description}</div>
-      )}
+      {node.description && <div className="flow-node-desc">{node.description}</div>}
       {node.type === NODE_TYPES.TRIGGER && (
-        <Tag color="blue">{TRIGGER_TYPES.find(t => t.value === node.triggerType)?.label || node.triggerType}</Tag>
+        <Tag color="blue">
+          {TRIGGER_TYPES.find((t) => t.value === node.triggerType)?.label || node.triggerType}
+        </Tag>
       )}
       {node.type === NODE_TYPES.ACTION && (
-        <Tag color="green">{ACTION_TYPES.find(t => t.value === node.actionType)?.label || node.actionType}</Tag>
+        <Tag color="green">
+          {ACTION_TYPES.find((t) => t.value === node.actionType)?.label || node.actionType}
+        </Tag>
       )}
     </div>
   )
@@ -117,15 +124,8 @@ const FlowNode = ({ node, isSelected, onSelect, onDelete, onUpdate, readOnly }) 
 /**
  * 流程画布组件
  */
-const FlowCanvas = ({
-  workflow,
-  nodes = [],
-  edges = [],
-  onNodesChange,
-  readOnly = false,
-}) => {
+const FlowCanvas = ({ _workflow, nodes = [], _edges, onNodesChange, readOnly = false }) => {
   const [selectedNode, setSelectedNode] = useState(null)
-  const [draggedNode, setDraggedNode] = useState(null)
   const canvasRef = useRef(null)
 
   const handleDrop = (e) => {
@@ -133,13 +133,12 @@ const FlowCanvas = ({
     if (readOnly) return
 
     const nodeType = e.dataTransfer.getData('nodeType')
-    const nodeData = e.dataTransfer.getData('nodeData')
 
     if (nodeType) {
       const newNode = {
         id: `node_${Date.now()}`,
         type: nodeType,
-        name: `新${TRIGGER_TYPES.find(t => t.value === nodeType)?.label || '节点'}`,
+        name: `新${TRIGGER_TYPES.find((t) => t.value === nodeType)?.label || '节点'}`,
         triggerType: nodeType,
         actionType: nodeType,
         x: e.clientX - 200,
@@ -153,14 +152,13 @@ const FlowCanvas = ({
     e.preventDefault()
   }
 
-  const addNode = (type, data = {}) => {
+  const addNode = (type, _data = {}) => {
     if (readOnly) return
 
     const newNode = {
       id: `node_${Date.now()}`,
       type,
       name: `新${type === NODE_TYPES.TRIGGER ? '触发器' : '操作'}`,
-      ...data,
     }
 
     onNodesChange?.([...nodes, newNode])
@@ -168,16 +166,14 @@ const FlowCanvas = ({
 
   const deleteNode = (nodeId) => {
     if (readOnly) return
-    onNodesChange?.(nodes.filter(n => n.id !== nodeId))
+    onNodesChange?.(nodes.filter((n) => n.id !== nodeId))
     if (selectedNode === nodeId) {
       setSelectedNode(null)
     }
   }
 
   const updateNode = (nodeId, updates) => {
-    onNodesChange?.(nodes.map(n =>
-      n.id === nodeId ? { ...n, ...updates } : n
-    ))
+    onNodesChange?.(nodes.map((n) => (n.id === nodeId ? { ...n, ...updates } : n)))
   }
 
   return (
@@ -204,7 +200,7 @@ const FlowCanvas = ({
               <Button
                 type="primary"
                 icon={<PlayCircleOutlined />}
-                onClick={() => console.log('运行工作流')}
+                onClick={() => console.warn('运行工作流')}
               >
                 运行
               </Button>
@@ -213,12 +209,7 @@ const FlowCanvas = ({
         </div>
       </div>
 
-      <div
-        ref={canvasRef}
-        className="flow-canvas"
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-      >
+      <div ref={canvasRef} className="flow-canvas" onDrop={handleDrop} onDragOver={handleDragOver}>
         {nodes.length === 0 ? (
           <div className="flow-empty">
             <p>暂无节点</p>

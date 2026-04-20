@@ -97,7 +97,7 @@ export class Tenant {
    * 获取设置
    */
   getSetting(key, defaultValue) {
-    return key ? this.settings[key] ?? defaultValue : this.settings
+    return key ? (this.settings[key] ?? defaultValue) : this.settings
   }
 
   /**
@@ -213,7 +213,7 @@ class TenantManagerClass extends EventEmitter {
    * 获取活跃的租户
    */
   getActiveTenants() {
-    return this.getAllTenants().filter(t => t.isActive())
+    return this.getAllTenants().filter((t) => t.isActive())
   }
 
   /**

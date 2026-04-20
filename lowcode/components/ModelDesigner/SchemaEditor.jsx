@@ -4,7 +4,8 @@ import { PlusOutlined } from '@ant-design/icons'
 import useModelStore from '../../store/modelStore'
 
 const SchemaEditor = () => {
-  const { models, addModel, selectModel, selectedModel, addField, updateField, deleteField } = useModelStore()
+  const { models, addModel, selectModel, selectedModel, addField, updateField, deleteField } =
+    useModelStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modelName, setModelName] = useState('')
   const [modelDescription, setModelDescription] = useState('')
@@ -50,11 +51,7 @@ const SchemaEditor = () => {
       key: 'action',
       render: (_, record) => (
         <Space>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => handleEditField(record)}
-          >
+          <Button type="link" size="small" onClick={() => handleEditField(record)}>
             编辑
           </Button>
           <Button
@@ -92,11 +89,7 @@ const SchemaEditor = () => {
           }}
         >
           <h2>数据模型</h2>
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => setIsModalOpen(true)}
-          >
+          <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
             新建模型
           </Button>
         </div>
@@ -108,8 +101,7 @@ const SchemaEditor = () => {
               style={{
                 width: 200,
                 cursor: 'pointer',
-                border:
-                  selectedModel === model.id ? '2px solid #1890ff' : undefined,
+                border: selectedModel === model.id ? '2px solid #1890ff' : undefined,
               }}
               onClick={() => selectModel(model.id)}
               title={model.name}

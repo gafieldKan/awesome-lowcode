@@ -1,6 +1,6 @@
 // index.js
 
-import models from './models';
-import useCrud from './crudWithHooks';
+import models from './models'
+import useCrud from './crudWithHooks'
 
-export { models, useCrud };
+export { models, useCrud }

@@ -101,15 +101,15 @@
 }
 
 /* 节点类型颜色 */
-.flow-node[data-type="trigger"] {
+.flow-node[data-type='trigger'] {
   border-left: 4px solid #1890ff;
 }
 
-.flow-node[data-type="action"] {
+.flow-node[data-type='action'] {
   border-left: 4px solid #52c41a;
 }
 
-.flow-node[data-type="condition"] {
+.flow-node[data-type='condition'] {
   border-left: 4px solid #fa8c16;
 }
 
