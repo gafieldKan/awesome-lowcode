@@ -18,7 +18,12 @@
     "type": "git",
     "url": "git+https://github.com/gafieldKan/awesome-lowcode.git"
   },
-  "keywords": ["lowcode", "react", "vite", "antd"],
+  "keywords": [
+    "lowcode",
+    "react",
+    "vite",
+    "antd"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -29,6 +34,7 @@
     "@ant-design/icons": "^6.1.1",
     "@vitejs/plugin-react": "^6.0.1",
     "antd": "^6.3.6",
+    "commander": "^14.0.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.14.1",
